@@ -9,4 +9,4 @@ Description
 
 Detailed Explanation
 ------------
-[Detailed Explanation]()
+[Detailed Explanation](https://rootritesh.medium.com/automate-kubernetes-cluster-using-ansible-63f758604125)
