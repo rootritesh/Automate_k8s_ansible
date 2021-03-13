@@ -1,0 +1,41 @@
+- hosts: tag_Name_k8s_master
+  collections:
+    - rootritesh.k8s_cluster
+  roles:
+    - role: k8s_master
+
+- hosts: tag_Name_k8s_slave
+  collections:
+    - rootritesh.k8s_cluster
+  roles:
+    - role: k8s_slave
+
+
+- hosts: tag_Name_k8s_master
+  tasks:
+  - name: Copying file wordpress.yml
+    become: true
+    copy:
+      src: /root/ansible_playbooks/k8syml/wordpress.yml
+      dest: /home/ec2-user/wordpress.yml
+      owner: ec2-user
+
+  - name: Copying file db.yml(Mysql)
+    become: true
+    copy:
+      src: /root/ansible_playbooks/k8syml/db.yml
+      dest: /home/ec2-user/db.yml
+      owner: ec2-user
+
+  - name: Copying file kustomization.yml
+    become: true
+    copy:
+      src: /root/ansible_playbooks/k8syml/kustomization.yml
+      dest: /home/ec2-user/kustomization.yml
+      owner: ec2-user
+
+- hosts: tag_Name_k8s_master
+  tasks:
+  - name: Deploying Wordpress + Mysql
+    shell: kubectl apply -k .
+
